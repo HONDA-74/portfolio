@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mohanad Tarek — Web Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--muted:#94a3b8;--accent:#06b6d4;--glass:rgba(255,255,255,0.04)}
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;color:#e6eef8;background:linear-gradient(180deg,#071029 0%, #081326 100%)}
+    .container{max-width:1100px;margin:36px auto;padding:24px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .avatar{width:64px;height:64px;border-radius:12px;background:var(--glass);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent)}
+    h1{margin:0;font-size:1.4rem}
+    p.lead{color:var(--muted);margin:6px 0 0}
+    nav a{color:var(--muted);text-decoration:none;margin-left:14px}
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:28px;margin-top:28px}
+    main{background:rgba(255,255,255,0.02);padding:20px;border-radius:12px}
+    aside{background:rgba(255,255,255,0.02);padding:20px;border-radius:12px;height:fit-content}
+    .section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+    .project{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:16px;border-radius:10px;margin-bottom:12px}
+    .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+    .tag{font-size:12px;padding:6px 8px;border-radius:8px;background:#071827;color:var(--muted)}
+    .tech{font-weight:600;color:var(--accent)}
+    .cta{display:inline-block;padding:10px 14px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--accent);text-decoration:none}
+    .about p{color:var(--muted);line-height:1.6}
+    footer{margin-top:28px;color:var(--muted);text-align:center;font-size:13px}
+    .small{font-size:13px;color:var(--muted)}
+    /* Responsive */
+    @media (max-width:900px){.grid{grid-template-columns:1fr;}.brand h1{font-size:1.1rem}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="avatar">MT</div>
+        <div>
+          <h1>Mohanad Tarek</h1>
+          <p class="lead">Backend Developer • Node.js, Express, MongoDB — Learning React, Next.js & UI/UX</p>
+        </div>
+      </div>
+      <nav>
+        <a href="#projects">Projects</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <div class="grid">
+      <main>
+        <section id="projects">
+          <div class="section-title">
+            <h2>Projects</h2>
+            <span class="small">Selected works (Backend, Real-time, AI integration)</span>
+          </div>
+
+          <!-- Job Search App -->
+          <article class="project">
+            <h3>Job Search App</h3>
+            <p class="small">A full-featured job platform with REST APIs, GraphQL endpoints, and real-time notifications.</p>
+            <div class="tags">
+              <span class="tag">Node.js</span>
+              <span class="tag">Express</span>
+              <span class="tag">MongoDB</span>
+              <span class="tag">GraphQL</span>
+              <span class="tag">Socket.io</span>
+              <span class="tag">JWT</span>
+            </div>
+            <p style="margin-top:10px;color:var(--muted)">Role: Backend Developer — designed schemas, implemented REST & GraphQL APIs, integrated Socket.io for live updates.</p>
+            <div style="margin-top:10px">
+              <a class="cta" href="#">GitHub</a>
+              <a class="cta" href="#" style="margin-left:8px">Live Demo</a>
+            </div>
+          </article>
+
+          <!-- Feed Ur Seed -->
+          <article class="project">
+            <h3>Feed Ur Seed</h3>
+            <p class="small">Plant-care platform with CRUD, an e-commerce shop, chatbot, and AI-powered image recognition.</p>
+            <div class="tags">
+              <span class="tag">Node.js</span>
+              <span class="tag">Express</span>
+              <span class="tag">MongoDB</span>
+              <span class="tag">AI / Image Recognition</span>
+              <span class="tag">Chatbot</span>
+            </div>
+            <p style="margin-top:10px;color:var(--muted)">Role: Backend Developer — implemented APIs, connected AI model, and integrated shop + chatbot modules.</p>
+            <div style="margin-top:10px">
+              <a class="cta" href="#">GitHub</a>
+              <a class="cta" href="#" style="margin-left:8px">Live Demo</a>
+            </div>
+          </article>
+
+          <!-- Saraha App -->
+          <article class="project">
+            <h3>Saraha App</h3>
+            <p class="small">Anonymous messaging app with secure authentication and message handling.</p>
+            <div class="tags">
+              <span class="tag">Node.js</span>
+              <span class="tag">Express</span>
+              <span class="tag">MongoDB</span>
+              <span class="tag">JWT</span>
+            </div>
+            <p style="margin-top:10px;color:var(--muted)">Role: Backend Developer — developed messaging APIs and authentication flows.</p>
+            <div style="margin-top:10px">
+              <a class="cta" href="#">GitHub</a>
+              <a class="cta" href="#" style="margin-left:8px">Live Demo</a>
+            </div>
+          </article>
+
+        </section>
+
+        <section id="about" style="margin-top:22px">
+          <div class="section-title"><h2>About</h2></div>
+          <div class="about">
+            <p>I’m a Backend Developer with practical experience building scalable APIs using Node.js, Express and MongoDB. I’m currently expanding my skills at ITI where I’m learning NestJS, React, Next.js and UI/UX design to become a full-stack developer. I enjoy solving problems, writing clean code and building features that deliver value to users.</p>
+          </div>
+        </section>
+
+      </main>
+
+      <aside>
+        <div style="margin-bottom:14px">
+          <h4>Skills</h4>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">
+            <span class="tag">Node.js</span>
+            <span class="tag">Express</span>
+            <span class="tag">MongoDB</span>
+            <span class="tag">GraphQL</span>
+            <span class="tag">Socket.io</span>
+            <span class="tag">REST APIs</span>
+            <span class="tag">Mongoose</span>
+            <span class="tag">JWT</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom:14px">
+          <h4>Certifications</h4>
+          <p class="small" style="margin:6px 0 0">Backend Development Certificate — Route</p>
+          <p class="small" style="margin:6px 0 0">ITI Scholarship — Ongoing</p>
+        </div>
+
+        <div style="margin-bottom:14px">
+          <h4>Quick Links</h4>
+          <p style="margin:8px 0"><a class="cta" href="https://www.linkedin.com/in/mohanad-tarek-2714b92b6" target="_blank">LinkedIn</a></p>
+          <p style="margin:8px 0"><a class="cta" href="https://github.com/HONDA-74" target="_blank">GitHub</a></p>
+        </div>
+
+        <div id="contact">
+          <h4>Contact</h4>
+          <p class="small" style="margin-top:6px">Email: <strong>mohanadtarek742203@gmail.com</strong></p>
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      Built by <strong>Mohanad Tarek</strong> — Backend Developer. Replace placeholders (GitHub, demo links, email, screenshots) with your real ones before publishing.
+    </footer>
+  </div>
+</body>
+</html>
