@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Mohanad Tarek — Web Developer</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<!-- Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/trianglify@4.1.1/dist/trianglify.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.5.2/velocity.min.js"></script>
+
 <style>
 :root{
   --accent:#06b6d4;
@@ -12,66 +18,26 @@
   --card-bg:rgba(255,255,255,0.02);
 }
 
-/* Body + Animated Multi-layered SVG Background */
-body {
+/* Background layers */
+#background-container {position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;overflow:hidden;}
+.background-1, .background-2 {position:absolute;top:0;left:0;width:100%;height:100%;display:block;background-size:cover;}
+
+/* Container & layout */
+body{
   margin:0;
   font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
   color:#e6eef8;
-  overflow-x:hidden;
-  background:#0f0f0f;
   position:relative;
+  overflow-x:hidden;
 }
-
-/* SVG Layers as pseudo-elements */
-body::before, body::after {
-  content:'';
-  position:fixed;
-  top:0; left:0; width:100%; height:100%; z-index:-1;
-  background-repeat:no-repeat;
-  background-size:cover;
-  opacity:0.05;
-}
-
-body::before {
-  background-image: radial-gradient(circle at 20% 30%, #1a1a1a 0%, transparent 60%);
-  animation: move1 30s linear infinite;
-}
-body::after {
-  background-image: radial-gradient(circle at 80% 70%, #2a2a2a 0%, transparent 60%);
-  animation: move2 45s linear infinite;
-}
-
-@keyframes move1 {
-  0% { transform: translate(0,0) scale(1);}
-  50% { transform: translate(30px, -20px) scale(1.05);}
-  100% { transform: translate(0,0) scale(1);}
-}
-
-@keyframes move2 {
-  0% { transform: translate(0,0) scale(1);}
-  50% { transform: translate(-20px, 30px) scale(1.03);}
-  100% { transform: translate(0,0) scale(1);}
-}
-
-/* Container & layout */
-.container{max-width:1100px;margin:0 auto;padding:24px;display:flex;flex-direction:column;align-items:center;}
+.container{max-width:1100px;margin:0 auto;padding:24px;display:flex;flex-direction:column;align-items:center;position:relative;z-index:1;}
 header{display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:60px;}
 header h1{font-size:2.4rem;margin:16px 0 6px;}
 header p.lead{color:var(--muted);font-size:1.1rem;line-height:1.6;max-width:800px;margin:0 auto;}
-
 .avatar-container{
-  width:250px;
-  height:250px;
-  border-radius:50%;
-  overflow:hidden;
-  margin-bottom:30px;
+  width:250px;height:250px;border-radius:50%;overflow:hidden;margin-bottom:30px;
 }
-.avatar-container img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  transition: transform 0.5s ease;
-}
+.avatar-container img{width:100%;height:100%;object-fit:cover;transition: transform 0.5s ease;}
 .avatar-container img:hover{ transform: scale(1.05); }
 
 /* Projects */
@@ -116,89 +82,160 @@ footer{margin-top:60px;color:var(--muted);text-align:center;font-size:13px;}
 </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div class="avatar-container">
-        <img src="https://drive.google.com/file/d/1a6xrPsUJ2zaGLOVXVqZlUabevvxWsGMx/view?usp=sharing" alt="Mohanad Tarek">
-      </div>
-      <h1>Mohanad Tarek</h1>
-      <p class="lead">Backend Developer • Node.js, Express, MongoDB — Learning React, Next.js & UI/UX</p>
-    </header>
+<!-- Background Layers -->
+<div id="background-container">
+  <div id="background-1" class="background-1"></div>
+  <div id="background-2" class="background-2"></div>
+</div>
 
-    <section class="project-section">
-      <div class="section-title"><h2>Projects</h2></div>
-
-      <!-- Job Search App -->
-      <article class="project">
-        <h3>Job Search App</h3>
-        <p>A full-featured job platform with REST APIs, GraphQL endpoints, and real-time notifications.</p>
-        <div class="tags">
-          <span class="tag">Node.js</span>
-          <span class="tag">Express</span>
-          <span class="tag">MongoDB</span>
-          <span class="tag">GraphQL</span>
-          <span class="tag">Socket.io</span>
-          <span class="tag">JWT</span>
-        </div>
-        <a class="cta" href="https://github.com/HONDA-74/Search-Job-App" target="_blank">GitHub</a>
-      </article>
-
-      <!-- Feed Ur Seed -->
-      <article class="project">
-        <h3>Feed Ur Seed</h3>
-        <p>Plant-care platform with CRUD, an e-commerce shop, chatbot, and AI-powered image recognition.</p>
-        <div class="tags">
-          <span class="tag">Node.js</span>
-          <span class="tag">Express</span>
-          <span class="tag">MongoDB</span>
-          <span class="tag">AI / Image Recognition</span>
-          <span class="tag">Chatbot</span>
-        </div>
-        <a class="cta" href="https://github.com/HONDA-74/FeedYourSeed" target="_blank">GitHub</a>
-      </article>
-
-      <!-- Book Library -->
-      <article class="project">
-        <h3>Book Library</h3>
-        <p>Library platform with CRUD operations, search, and management functionalities.</p>
-        <div class="tags">
-          <span class="tag">Node.js</span>
-          <span class="tag">Express</span>
-          <span class="tag">MongoDB</span>
-        </div>
-        <a class="cta" href="https://github.com/HONDA-74/Search-Job-App" target="_blank">GitHub</a>
-      </article>
-
-      <!-- Social App -->
-      <article class="project">
-        <h3>Social App</h3>
-        <p>Social media platform with real-time chat and user management.</p>
-        <div class="tags">
-          <span class="tag">Node.js</span>
-          <span class="tag">Express</span>
-          <span class="tag">MongoDB</span>
-          <span class="tag">Socket.io</span>
-        </div>
-        <a class="cta" href="https://github.com/HONDA-74/Social-App" target="_blank">GitHub</a>
-      </article>
-
-    </section>
-
-    <section class="about">
-      <h2>About Me</h2>
-      <p>I’m a Backend Developer with practical experience building scalable APIs using Node.js, Express and MongoDB. I’m currently expanding my skills at ITI where I’m learning NestJS, React, Next.js and UI/UX design to become a full-stack developer. I enjoy solving problems, writing clean code and building features that deliver value to users.</p>
-    </section>
-
-    <div class="quick-links">
-      <a href="https://www.linkedin.com/in/mohanad-tarek-2714b92b6" target="_blank">LinkedIn</a>
-      <a href="mailto:mohanadtarek742203@gmail.com" target="_blank">Email</a>
-      <a href="https://www.facebook.com/mohanad74tarek/?viewas=100000686899395&locale=ar_AR" target="_blank">Facebook</a>
-      <a href="https://www.instagram.com/jr.honda.74/" target="_blank">Instagram</a>
+<div class="container">
+  <header>
+    <div class="avatar-container">
+      <img src="https://drive.google.com/file/d/1a6xrPsUJ2zaGLOVXVqZlUabevvxWsGMx/view?usp=sharing" alt="Mohanad Tarek">
     </div>
+    <h1>Mohanad Tarek</h1>
+    <p class="lead">Backend Developer • Node.js, Express, MongoDB — Learning React, Next.js & UI/UX</p>
+  </header>
 
-    <footer>
-      Built by <strong>Mohanad Tarek</strong> — Backend Developer.
-    </footer>
+  <section class="project-section">
+    <div class="section-title"><h2>Projects</h2></div>
+
+    <article class="project">
+      <h3>Job Search App</h3>
+      <p>A full-featured job platform with REST APIs, GraphQL endpoints, and real-time notifications.</p>
+      <div class="tags">
+        <span class="tag">Node.js</span>
+        <span class="tag">Express</span>
+        <span class="tag">MongoDB</span>
+        <span class="tag">GraphQL</span>
+        <span class="tag">Socket.io</span>
+        <span class="tag">JWT</span>
+      </div>
+      <a class="cta" href="https://github.com/HONDA-74/Search-Job-App" target="_blank">GitHub</a>
+    </article>
+
+    <article class="project">
+      <h3>Feed Ur Seed</h3>
+      <p>Plant-care platform with CRUD, an e-commerce shop, chatbot, and AI-powered image recognition.</p>
+      <div class="tags">
+        <span class="tag">Node.js</span>
+        <span class="tag">Express</span>
+        <span class="tag">MongoDB</span>
+        <span class="tag">AI / Image Recognition</span>
+        <span class="tag">Chatbot</span>
+      </div>
+      <a class="cta" href="https://github.com/HONDA-74/FeedYourSeed" target="_blank">GitHub</a>
+    </article>
+
+    <article class="project">
+      <h3>Book Library</h3>
+      <p>Library platform with CRUD operations, search, and management functionalities.</p>
+      <div class="tags">
+        <span class="tag">Node.js</span>
+        <span class="tag">Express</span>
+        <span class="tag">MongoDB</span>
+      </div>
+      <a class="cta" href="https://github.com/HONDA-74/Search-Job-App" target="_blank">GitHub</a>
+    </article>
+
+    <article class="project">
+      <h3>Social App</h3>
+      <p>Social media platform with real-time chat and user management.</p>
+      <div class="tags">
+        <span class="tag">Node.js</span>
+        <span class="tag">Express</span>
+        <span class="tag">MongoDB</span>
+        <span class="tag">Socket.io</span>
+      </div>
+      <a class="cta" href="https://github.com/HONDA-74/Social-App" target="_blank">GitHub</a>
+    </article>
+
+  </section>
+
+  <section class="about">
+    <h2>About Me</h2>
+    <p>I’m a Backend Developer with practical experience building scalable APIs using Node.js, Express and MongoDB. I’m currently expanding my skills at ITI where I’m learning NestJS, React, Next.js and UI/UX design to become a full-stack developer. I enjoy solving problems, writing clean code and building features that deliver value to users.</p>
+  </section>
+
+  <div class="quick-links">
+    <a href="https://www.linkedin.com/in/mohanad-tarek-2714b92b6" target="_blank">LinkedIn</a>
+    <a href="mailto:mohanadtarek742203@gmail.com" target="_blank">Email</a>
+    <a href="https://www.facebook.com/mohanad74tarek/?viewas=100000686899395&locale=ar_AR" target="_blank">Facebook</a>
+    <a href="https://www.instagram.com/jr.honda.74/" target="_blank">Instagram</a>
   </div>
+
+  <footer>
+    Built by <strong>Mohanad Tarek</strong> — Backend Developer.
+  </footer>
+</div>
+
+<!-- Animated Background JS -->
+<script>
+$(document).ready(function(){
+  var width = $(window).width();
+  var height = $(window).height();
+  $('#background-container, #background-1, #background-2').css({'min-width': width,'min-height': height});
+  svgNew();
+  recreateSvg();
+});
+
+var svg = {};
+var draw = 1;
+
+var svgNew = function(){
+  svg.t = new Trianglify({
+    cellSize:100,
+    variance:0.75,
+    xColors: ['#0f0f0f','#1a1a1a','#2a2a2a'],
+    yColors: ['#0f0f0f','#1a1a1a','#2a2a2a']
+  });
+  svg.width = $(window).width();
+  svg.height = $(window).height();
+  svg.pattern = svg.t.generate(svg.width, svg.height);
+  if(draw===1){svgDraw1();}else{svgDraw2();}
+};
+
+var svgDraw1 = function(resize){
+  draw=2;
+  if(resize==='resize'){
+    svg.pattern=svg.t.generate(svg.width,svg.height);
+    $('#background-1').css({'min-width':svg.width,'min-height':svg.height,'background':svg.pattern.dataUrl});
+  }else{
+    $('.background-1').css({'background':svg.pattern.dataUrl});
+    fade1();
+  }
+};
+var svgDraw2 = function(resize){
+  draw=1;
+  if(resize==='resize'){
+    svg.pattern=svg.t.generate(svg.width,svg.height);
+    $('#background-2').css({'min-width':svg.width,'min-height':svg.height,'background':svg.pattern.dataUrl});
+  }else{
+    $('.background-2').css({'background':svg.pattern.dataUrl});
+    fade2();
+  }
+};
+
+var fade1 = function(){
+  $('.background-1').velocity("fadeIn",{duration:3000});
+  $('.background-2').velocity("fadeOut",{duration:4000});
+};
+var fade2 = function(){
+  $('.background-2').velocity("fadeIn",{duration:3000});
+  $('.background-1').velocity("fadeOut",{duration:4000});
+};
+
+var recreateSvg = function(){
+  window.setInterval(svgNew,5000);
+};
+
+$(window).resize(function(){
+  svg.width=$(window).width();
+  svg.height=$(window).height();
+  $('#background-container').css({'min-width':svg.width,'min-height':svg.height});
+  svgDraw1('resize');
+  svgDraw2('resize');
+});
+</script>
 </body>
 </html>
