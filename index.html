@@ -6,13 +6,54 @@
   <title>Mohanad Tarek — Web Developer</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#0f1724;--card:#0b1220;--muted:#94a3b8;--accent:#06b6d4;--glass:rgba(255,255,255,0.04)}
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;color:#e6eef8;background:linear-gradient(180deg,#071029 0%, #081326 100%)}
+    :root{
+      --bg:#0f0f0f;
+      --card:#1a1a1a;
+      --muted:#94a3b8;
+      --accent:#06b6d4;
+      --glass:rgba(255,255,255,0.04);
+    }
+    *{box-sizing:border-box;}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;color:#e6eef8;
+      background: linear-gradient(-45deg, #0f0f0f, #1a1a1a, #0f0f0f, #1a1a1a);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
     .container{max-width:1100px;margin:36px auto;padding:24px}
     header{display:flex;align-items:center;justify-content:space-between;gap:16px}
     .brand{display:flex;align-items:center;gap:12px}
-    .avatar{width:64px;height:64px;border-radius:12px;background:var(--glass);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent)}
+    
+    .avatar {
+      width:64px;
+      height:64px;
+      border-radius:50%;
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      animation: avatarZoom 1s ease forwards;
+      opacity:0;
+    }
+    .avatar-img {
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      transform: scale(1);
+      transition: transform 0.5s ease;
+    }
+    .avatar-img:hover { transform: scale(1.05); }
+    @keyframes avatarZoom {
+      from { opacity:0; transform: scale(0.8); }
+      to { opacity:1; transform: scale(1); }
+    }
+
     h1{margin:0;font-size:1.4rem}
     p.lead{color:var(--muted);margin:6px 0 0}
     nav a{color:var(--muted);text-decoration:none;margin-left:14px}
@@ -20,23 +61,47 @@
     main{background:rgba(255,255,255,0.02);padding:20px;border-radius:12px}
     aside{background:rgba(255,255,255,0.02);padding:20px;border-radius:12px;height:fit-content}
     .section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-    .project{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:16px;border-radius:10px;margin-bottom:12px}
+    
+    /* Projects hover effect */
+    .project {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding: 16px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+      cursor: pointer;
+    }
+    .project:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+      background: linear-gradient(180deg, rgba(6,182,212,0.1), rgba(6,182,212,0.05));
+    }
+
     .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
     .tag{font-size:12px;padding:6px 8px;border-radius:8px;background:#071827;color:var(--muted)}
     .tech{font-weight:600;color:var(--accent)}
-    .cta{display:inline-block;padding:10px 14px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--accent);text-decoration:none}
+    .cta{display:inline-block;padding:10px 14px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--accent);text-decoration:none;transition:all 0.3s}
+    .cta:hover{background:var(--accent);color:#0f1724;}
     .about p{color:var(--muted);line-height:1.6}
     footer{margin-top:28px;color:var(--muted);text-align:center;font-size:13px}
     .small{font-size:13px;color:var(--muted)}
+
     /* Responsive */
-    @media (max-width:900px){.grid{grid-template-columns:1fr;}.brand h1{font-size:1.1rem}}
+    @media (max-width:900px){
+      .grid{grid-template-columns:1fr;gap:20px;}
+      header{flex-direction:column;align-items:flex-start;}
+      nav a{margin-left:0;margin-right:10px;margin-top:8px;display:inline-block;}
+      .brand h1{font-size:1.1rem}
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
       <div class="brand">
-        <div class="avatar">MT</div>
+        <div class="avatar">
+          <img src="https://drive.google.com/uc?export=view&id=1a6xrPsUJ2zaGLOVXVqZlUabevvxWsGMx" alt="Mohanad Tarek" class="avatar-img" />
+        </div>
         <div>
           <h1>Mohanad Tarek</h1>
           <p class="lead">Backend Developer • Node.js, Express, MongoDB — Learning React, Next.js & UI/UX</p>
@@ -71,7 +136,7 @@
             </div>
             <p style="margin-top:10px;color:var(--muted)">Role: Backend Developer — designed schemas, implemented REST & GraphQL APIs, integrated Socket.io for live updates.</p>
             <div style="margin-top:10px">
-              <a class="cta" href="#">GitHub</a>
+              <a class="cta" href="https://github.com/HONDA-74/Search-Job-App" target="_blank">GitHub</a>
               <a class="cta" href="#" style="margin-left:8px">Live Demo</a>
             </div>
           </article>
@@ -89,24 +154,40 @@
             </div>
             <p style="margin-top:10px;color:var(--muted)">Role: Backend Developer — implemented APIs, connected AI model, and integrated shop + chatbot modules.</p>
             <div style="margin-top:10px">
-              <a class="cta" href="#">GitHub</a>
+              <a class="cta" href="https://github.com/HONDA-74/FeedYourSeed" target="_blank">GitHub</a>
               <a class="cta" href="#" style="margin-left:8px">Live Demo</a>
             </div>
           </article>
 
-          <!-- Saraha App -->
+          <!-- Book Library -->
           <article class="project">
-            <h3>Saraha App</h3>
-            <p class="small">Anonymous messaging app with secure authentication and message handling.</p>
+            <h3>Book Library</h3>
+            <p class="small">Library platform with CRUD operations, search, and management functionalities.</p>
             <div class="tags">
               <span class="tag">Node.js</span>
               <span class="tag">Express</span>
               <span class="tag">MongoDB</span>
-              <span class="tag">JWT</span>
             </div>
-            <p style="margin-top:10px;color:var(--muted)">Role: Backend Developer — developed messaging APIs and authentication flows.</p>
+            <p style="margin-top:10px;color:var(--muted)">Role: Backend Developer — implemented APIs and managed book database.</p>
             <div style="margin-top:10px">
-              <a class="cta" href="#">GitHub</a>
+              <a class="cta" href="https://github.com/HONDA-74/Search-Job-App" target="_blank">GitHub</a>
+              <a class="cta" href="#" style="margin-left:8px">Live Demo</a>
+            </div>
+          </article>
+
+          <!-- Social App -->
+          <article class="project">
+            <h3>Social App</h3>
+            <p class="small">Social media platform with real-time chat and user management.</p>
+            <div class="tags">
+              <span class="tag">Node.js</span>
+              <span class="tag">Express</span>
+              <span class="tag">MongoDB</span>
+              <span class="tag">Socket.io</span>
+            </div>
+            <p style="margin-top:10px;color:var(--muted)">Role: Backend Developer — built chat and API features.</p>
+            <div style="margin-top:10px">
+              <a class="cta" href="https://github.com/HONDA-74/Social-App" target="_blank">GitHub</a>
               <a class="cta" href="#" style="margin-left:8px">Live Demo</a>
             </div>
           </article>
@@ -146,7 +227,9 @@
         <div style="margin-bottom:14px">
           <h4>Quick Links</h4>
           <p style="margin:8px 0"><a class="cta" href="https://www.linkedin.com/in/mohanad-tarek-2714b92b6" target="_blank">LinkedIn</a></p>
-          <p style="margin:8px 0"><a class="cta" href="https://github.com/HONDA-74" target="_blank">GitHub</a></p>
+          <p style="margin:8px 0"><a class="cta" href="mailto:mohanadtarek742203@gmail.com" target="_blank">Email</a></p>
+          <p style="margin:8px 0"><a class="cta" href="https://www.facebook.com/mohanad74tarek/?viewas=100000686899395&locale=ar_AR" target="_blank">Facebook</a></p>
+          <p style="margin:8px 0"><a class="cta" href="https://www.instagram.com/jr.honda.74/" target="_blank">Instagram</a></p>
         </div>
 
         <div id="contact">
@@ -157,7 +240,7 @@
     </div>
 
     <footer>
-      Built by <strong>Mohanad Tarek</strong> — Backend Developer. Replace placeholders (GitHub, demo links, email, screenshots) with your real ones before publishing.
+      Built by <strong>Mohanad Tarek</strong> — Backend Developer.
     </footer>
   </div>
 </body>
