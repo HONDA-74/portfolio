@@ -1,228 +1,871 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Mohanad Tarek — Web Developer</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mohanad Tarek — Full Stack Developer</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-<!-- Libraries -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/trianglify@4.1.1/dist/trianglify.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.5.2/velocity.min.js"></script>
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-<style>
-:root{
-  --accent:#06b6d4;
-  --muted:#94a3b8;
-  --card-bg:rgba(255,255,255,0.02);
-}
+    <style>
+      :root {
+        --accent: #06b6d4;
+        --accent-dark: #0891b2;
+        --muted: #94a3b8;
+        --card-bg: rgba(255, 255, 255, 0.05);
+        --text-primary: #f1f5f9;
+        --text-secondary: #cbd5e1;
+        --bg-dark: #0f0f0f;
+        --bg-darker: #0a0a0a;
+        --border-color: #6b7280;
+        --border-hover: #9ca3af;
+      }
 
-/* Reset */
-body, html{margin:0; padding:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial; color:#e6eef8; background:#0f0f0f;}
-.container{max-width:1100px; margin:0 auto; padding:24px; z-index:2; position:relative;}
+      /* Reset */
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto,
+          "Helvetica Neue", Arial;
+        color: var(--text-primary);
+        background: var(--bg-dark);
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+      }
 
-/* Background Layers */
-#background-container{position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; overflow:hidden;}
-.background-1, .background-2{position:absolute; top:0; left:0; width:100%; height:100%; display:block; background-size:cover;}
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 24px;
+        z-index: 2;
+        position: relative;
+      }
 
-/* Header */
-header{display:flex; flex-direction:column; align-items:center; text-align:center; margin-bottom:60px; z-index:2;}
-header h1{font-size:2.4rem; margin:16px 0 6px;}
-header p.lead{color:var(--muted); font-size:1.1rem; line-height:1.6; max-width:800px; margin:0 auto;}
+      /* Background Canvas */
+      #background-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+      }
 
-/* Avatar */
-.avatar-container{width:250px;height:250px;border-radius:50%;overflow:hidden;margin-bottom:30px; border:4px solid var(--accent);}
-.avatar-container img{width:100%;height:100%;object-fit:cover; transition: transform 0.5s ease;}
-.avatar-container img:hover{transform: scale(1.05);}
+      /* Header */
+      header {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 60px;
+        margin-bottom: 80px;
+        z-index: 2;
+        align-items: flex-start;
+      }
 
-/* Projects */
-.project-section{width:100%; max-width:1000px; margin-bottom:50px;}
-.section-title{margin-bottom:32px; text-align:left;}
-.project{background:var(--card-bg); padding:32px; border-radius:16px; margin-bottom:32px; transition: transform 0.3s ease, box-shadow 0.3s ease;}
-.project:hover{transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.5);}
-.project h3{margin-top:0;}
-.project .tags{display:flex; flex-wrap:wrap; gap:12px; margin-top:12px;}
-.project .tag{font-size:12px; padding:6px 12px; border-radius:10px; background:#1a1a1a; color:var(--muted);}
-.project .cta{display:block; margin-top:16px; padding:10px 14px; border-radius:10px; background:transparent; border:1px solid rgba(255,255,255,0.06); color:var(--accent); text-decoration:none; width:fit-content; transition: all 0.3s;}
-.project .cta:hover{transform: scale(1.1); box-shadow: 0 0 15px var(--accent); background:rgba(6,182,212,0.2);}
+      .profile-section {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        min-width: 300px;
+        max-width: 400px;
+        position: relative;
+      }
 
-/* About */
-.about{margin-top:60px; max-width:800px; text-align:left;}
-.about p{color:var(--muted); line-height:1.6; font-size:1.05rem;}
+      .avatar-container {
+        width: 100%;
+        aspect-ratio: 1;
+        border-radius: 20px;
+        overflow: hidden;
+        margin-bottom: 30px;
+        transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        cursor: pointer;
+        position: relative;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        /* إعادة البوردر الرصاصي */
+        /* border: 4px solid var(--border-color); */
+      }
 
-/* Quick Links */
-.quick-links{margin-top:32px; display:flex; flex-wrap:wrap; gap:12px;}
-.quick-links a{color:var(--accent); text-decoration:none; border:1px solid rgba(255,255,255,0.1); padding:10px 14px; border-radius:10px; transition: all 0.3s;}
-.quick-links a:hover{background:var(--accent); color:#0f0f0f; transform: scale(1.05);}
+      /* تأثير الهور القديم على الصورة */
+      .avatar-container::before {
+        content: "";
+        position: absolute;
+        top: -4px;
+        left: -4px;
+        right: -4px;
+        bottom: -4px;
+        border-radius: 24px;
+        border: 4px solid transparent;
+        background: linear-gradient(
+            45deg,
+            var(--border-color),
+            var(--border-hover),
+            var(--border-color)
+          )
+          border-box;
+        -webkit-mask: linear-gradient(#fff 0 0) padding-box,
+          linear-gradient(#fff 0 0);
+        -webkit-mask-composite: destination-out;
+        mask-composite: exclude;
+        transition: all 0.5s ease;
+        opacity: 0;
+        z-index: 1;
+      }
 
-/* Footer */
-footer{margin-top:60px; color:var(--muted); text-align:center; font-size:13px;}
+      .avatar-container:hover::before {
+        opacity: 1;
+        box-shadow: 0 0 20px rgba(156, 163, 175, 0.7);
+      }
 
-/* Responsive */
-@media(max-width:900px){
-  .avatar-container{width:180px;height:180px;}
-  header h1{font-size:2rem;}
-  header p.lead{font-size:1rem;}
-  .project{padding:24px;}
-}
-</style>
-</head>
-<body>
-<!-- Background Layers -->
-<div id="background-container">
-  <div id="background-1" class="background-1"></div>
-  <div id="background-2" class="background-2"></div>
-</div>
+      .avatar-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+        transition: transform 0.5s ease;
+        filter: brightness(0.9);
+      }
 
-<div class="container">
-  <header>
-    <div class="avatar-container">
-      <img src="https://drive.google.com/uc?export=view&id=1a6xrPsUJ2zaGLOVXVqZlUabevvxWsGMx" alt="Mohanad Tarek">
+      .avatar-container:hover img {
+        transform: scale(1.08);
+      }
+
+      .profile-info {
+        padding: 30px;
+        background: linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.05),
+          rgba(255, 255, 255, 0.02)
+        );
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .profile-info::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+      }
+
+      .profile-info h1 {
+        font-size: 2.4rem;
+        margin: 0 0 12px;
+        background: linear-gradient(90deg, var(--text-primary), var(--accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+      }
+
+      .profile-info .title {
+        color: var(--accent);
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .profile-info .title i {
+        font-size: 1.1rem;
+      }
+
+      .profile-info .description {
+        color: var(--text-secondary);
+        line-height: 1.7;
+        margin-bottom: 25px;
+        font-size: 1.05rem;
+      }
+
+      .profile-stats {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 25px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .stat {
+        text-align: center;
+        flex: 1;
+      }
+
+      .stat-value {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--accent);
+        display: block;
+      }
+
+      .stat-label {
+        font-size: 0.85rem;
+        color: var(--muted);
+        margin-top: 5px;
+        font-weight: 500;
+      }
+
+      .content-section {
+        flex: 2;
+        min-width: 300px;
+      }
+
+      /* Projects */
+      .project-section {
+        width: 100%;
+        margin-bottom: 60px;
+      }
+
+      .section-title {
+        margin-bottom: 40px;
+        text-align: left;
+        position: relative;
+        display: inline-block;
+      }
+
+      .section-title h2 {
+        font-size: 2.2rem;
+        margin: 0;
+        position: relative;
+        z-index: 1;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        color: var(--text-primary);
+      }
+
+      .projects-container {
+        display: flex;
+        flex-direction: column;
+        gap: 30px; /* مسافة بين الكروت */
+      }
+
+      .project {
+        background: linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.06),
+          rgba(255, 255, 255, 0.03)
+        );
+        padding: 30px;
+        border-radius: 16px;
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .project::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: var(--accent);
+        transform: scaleY(0);
+        transition: transform 0.3s ease;
+      }
+
+      .project:hover::before {
+        transform: scaleY(1);
+      }
+
+      .project:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      }
+
+      .project h3 {
+        margin-top: 0;
+        font-size: 1.5rem;
+        color: var(--text-primary);
+        margin-bottom: 15px;
+      }
+
+      .project p {
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+
+      .project .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 15px;
+      }
+
+      .project .tag {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+        border-radius: 20px;
+        background: rgba(6, 182, 212, 0.1);
+        color: var(--accent);
+        border: 1px solid rgba(6, 182, 212, 0.2);
+        font-weight: 500;
+      }
+
+      .project .cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 20px;
+        padding: 12px 20px;
+        border-radius: 10px;
+        background: transparent;
+        border: 1px solid rgba(6, 182, 212, 0.3);
+        color: var(--accent);
+        text-decoration: none;
+        width: fit-content;
+        transition: all 0.3s ease;
+        font-weight: 600;
+      }
+
+      .project .cta:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 15px var(--accent);
+        background: rgba(6, 182, 212, 0.2);
+      }
+
+      /* About */
+      .about {
+        margin-top: 80px;
+        text-align: left;
+        background: linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.06),
+          rgba(255, 255, 255, 0.03)
+        );
+        padding: 40px;
+        border-radius: 20px;
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .about::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+      }
+
+      .about h2 {
+        margin-top: 0;
+        font-size: 2rem;
+        margin-bottom: 25px;
+        color: var(--text-primary);
+        font-weight: 700;
+        letter-spacing: -0.5px;
+      }
+
+      .about p {
+        color: var(--text-secondary);
+        line-height: 1.7;
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+      }
+
+      /* Quick Links */
+      .quick-links {
+        margin-top: 40px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
+      }
+
+      .quick-links a {
+        color: var(--accent);
+        text-decoration: none;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 12px 20px;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 500;
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      .quick-links a:hover {
+        background: var(--accent);
+        color: var(--bg-dark);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(6, 182, 212, 0.4);
+      }
+
+      /* Footer */
+      footer {
+        margin-top: 80px;
+        color: var(--muted);
+        text-align: center;
+        font-size: 14px;
+        padding: 30px 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      footer strong {
+        color: var(--accent);
+        font-weight: 600;
+      }
+
+      /* Responsive */
+      @media (max-width: 900px) {
+        header {
+          flex-direction: column;
+          gap: 40px;
+        }
+
+        .profile-section {
+          max-width: 100%;
+        }
+
+        .profile-info h1 {
+          font-size: 2rem;
+        }
+
+        .section-title h2 {
+          font-size: 1.8rem;
+        }
+
+        .about {
+          padding: 30px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .profile-stats {
+          flex-direction: column;
+          gap: 20px;
+        }
+
+        .stat {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .quick-links {
+          justify-content: flex-start;
+        }
+
+        .quick-links a {
+          flex: 1;
+          justify-content: center;
+          min-width: 140px;
+        }
+
+        .project {
+          padding: 20px;
+        }
+      }
+
+      /* Animation classes */
+      .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+      }
+
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: var(--bg-darker);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--accent);
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--accent-dark);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Background Canvas -->
+    <canvas id="background-canvas"></canvas>
+
+    <div class="container">
+      <header>
+        <div class="profile-section">
+          <div class="avatar-container fade-in">
+            <img
+              src="https://github.com/HONDA-74/portfolio/blob/main/assets/p1.jpg?raw=true"
+              alt="Mohanad Tarek" />
+          </div>
+
+          <div class="profile-info fade-in">
+            <h1>Mohanad Tarek</h1>
+            <div class="title">
+              <i class="fas fa-code"></i>
+              Web Full Stack Developer
+            </div>
+            <div class="description">
+              Specialized in Node.js, Express, MongoDB. Currently expanding
+              skills in React, Next.js & UI/UX design. Passionate about building
+              scalable web applications.
+            </div>
+
+            <div class="profile-stats">
+              <div class="stat">
+                <span class="stat-value">10+</span>
+                <span class="stat-label">Projects</span>
+              </div>
+              <!-- <div class="stat">
+                <span class="stat-value">2+</span>
+                <span class="stat-label">Years Exp</span>
+              </div> -->
+              <div class="stat">
+                <span class="stat-value">5</span>
+                <span class="stat-label">Technologies</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <section class="project-section">
+            <div class="section-title fade-in">
+              <h2>Featured Projects</h2>
+            </div>
+
+            <div class="projects-container">
+              <article class="project fade-in">
+                <h3>Job Search App</h3>
+                <p>
+                  A full-featured job platform with REST APIs, GraphQL
+                  endpoints, and real-time notifications.
+                </p>
+                <div class="tags">
+                  <span class="tag">Node.js</span>
+                  <span class="tag">Express</span>
+                  <span class="tag">MongoDB</span>
+                  <span class="tag">GraphQL</span>
+                  <span class="tag">Socket.io</span>
+                  <span class="tag">JWT</span>
+                </div>
+                <a
+                  class="cta"
+                  href="https://github.com/HONDA-74/Search-Job-App"
+                  target="_blank">
+                  <i class="fab fa-github"></i>
+                  View on GitHub
+                </a>
+              </article>
+
+              <article class="project fade-in">
+                <h3>Feed Ur Seed</h3>
+                <p>
+                  Plant-care platform with CRUD, an e-commerce shop, chatbot,
+                  and AI-powered image recognition.
+                </p>
+                <div class="tags">
+                  <span class="tag">Node.js</span>
+                  <span class="tag">Express</span>
+                  <span class="tag">MongoDB</span>
+                  <span class="tag">AI / Image Recognition</span>
+                  <span class="tag">Chatbot</span>
+                </div>
+                <a
+                  class="cta"
+                  href="https://github.com/HONDA-74/FeedYourSeed"
+                  target="_blank">
+                  <i class="fab fa-github"></i>
+                  View on GitHub
+                </a>
+              </article>
+
+              <article class="project fade-in">
+                <h3>Book Library</h3>
+                <p>
+                  Library platform with CRUD operations, search, and management
+                  functionalities.
+                </p>
+                <div class="tags">
+                  <span class="tag">Node.js</span>
+                  <span class="tag">Express</span>
+                  <span class="tag">MongoDB</span>
+                </div>
+                <a
+                  class="cta"
+                  href="https://github.com/HONDA-74/Search-Job-App"
+                  target="_blank">
+                  <i class="fab fa-github"></i>
+                  View on GitHub
+                </a>
+              </article>
+
+              <article class="project fade-in">
+                <h3>Social App</h3>
+                <p>
+                  Social media platform with real-time chat and user management.
+                </p>
+                <div class="tags">
+                  <span class="tag">Node.js</span>
+                  <span class="tag">Express</span>
+                  <span class="tag">MongoDB</span>
+                  <span class="tag">Socket.io</span>
+                </div>
+                <a
+                  class="cta"
+                  href="https://github.com/HONDA-74/Social-App"
+                  target="_blank">
+                  <i class="fab fa-github"></i>
+                  View on GitHub
+                </a>
+              </article>
+            </div>
+          </section>
+        </div>
+      </header>
+
+      <section class="about fade-in">
+        <h2>About Me</h2>
+        <p>
+          I'm a passionate Web Full Stack Developer with extensive experience
+          building scalable APIs and web applications using modern technologies
+          like Node.js, Express, and MongoDB. I'm currently expanding my
+          expertise at ITI where I'm diving deep into NestJS, React, Next.js and
+          UI/UX design principles.
+        </p>
+        <p>
+          My approach combines technical excellence with user-centric design,
+          ensuring that every project I work on delivers both performance and
+          exceptional user experiences. I thrive on solving complex problems and
+          turning ideas into functional, elegant solutions.
+        </p>
+        <p>
+          When I'm not coding, I contribute to open source projects, explore
+          emerging technologies, and continuously seek opportunities to grow
+          both personally and professionally in the ever-evolving tech
+          landscape.
+        </p>
+      </section>
+
+      <div class="quick-links fade-in">
+        <a
+          href="https://www.linkedin.com/in/mohanad-tarek-2714b92b6"
+          target="_blank">
+          <i class="fab fa-linkedin"></i>
+          LinkedIn
+        </a>
+        <a href="mailto:mohanadtarek742203@gmail.com" target="_blank">
+          <i class="fas fa-envelope"></i>
+          Email
+        </a>
+        <a
+          href="https://www.facebook.com/mohanad74tarek/?viewas=100000686899395&locale=ar_AR"
+          target="_blank">
+          <i class="fab fa-facebook"></i>
+          Facebook
+        </a>
+        <a href="https://www.instagram.com/jr.honda.74/" target="_blank">
+          <i class="fab fa-instagram"></i>
+          Instagram
+        </a>
+        <a href="https://github.com/HONDA-74" target="_blank">
+          <i class="fab fa-github"></i>
+          GitHub
+        </a>
+      </div>
+
+      <footer class="fade-in">
+        Built with <i class="fas fa-heart" style="color: #ef4444"></i> by
+        <strong>Mohanad Tarek</strong> — Web Full Stack Developer
+      </footer>
     </div>
-    <h1>Mohanad Tarek</h1>
-    <p class="lead">Backend Developer • Node.js, Express, MongoDB — Learning React, Next.js & UI/UX</p>
-  </header>
 
-  <section class="project-section">
-    <div class="section-title"><h2>Projects</h2></div>
+    <!-- Background Animation JS -->
+    <script>
+      // Three.js background animation
+      document.addEventListener("DOMContentLoaded", function () {
+        const canvas = document.getElementById("background-canvas");
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(
+          75,
+          window.innerWidth / window.innerHeight,
+          0.1,
+          1000
+        );
+        const renderer = new THREE.WebGLRenderer({
+          canvas,
+          alpha: true,
+          antialias: true,
+        });
 
-    <article class="project">
-      <h3>Job Search App</h3>
-      <p>A full-featured job platform with REST APIs, GraphQL endpoints, and real-time notifications.</p>
-      <div class="tags">
-        <span class="tag">Node.js</span>
-        <span class="tag">Express</span>
-        <span class="tag">MongoDB</span>
-        <span class="tag">GraphQL</span>
-        <span class="tag">Socket.io</span>
-        <span class="tag">JWT</span>
-      </div>
-      <a class="cta" href="https://github.com/HONDA-74/Search-Job-App" target="_blank">GitHub</a>
-    </article>
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0x000000, 0);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    <article class="project">
-      <h3>Feed Ur Seed</h3>
-      <p>Plant-care platform with CRUD, an e-commerce shop, chatbot, and AI-powered image recognition.</p>
-      <div class="tags">
-        <span class="tag">Node.js</span>
-        <span class="tag">Express</span>
-        <span class="tag">MongoDB</span>
-        <span class="tag">AI / Image Recognition</span>
-        <span class="tag">Chatbot</span>
-      </div>
-      <a class="cta" href="https://github.com/HONDA-74/FeedYourSeed" target="_blank">GitHub</a>
-    </article>
+        // Create particles with improved distribution
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 2000;
 
-    <article class="project">
-      <h3>Book Library</h3>
-      <p>Library platform with CRUD operations, search, and management functionalities.</p>
-      <div class="tags">
-        <span class="tag">Node.js</span>
-        <span class="tag">Express</span>
-        <span class="tag">MongoDB</span>
-      </div>
-      <a class="cta" href="https://github.com/HONDA-74/Search-Job-App" target="_blank">GitHub</a>
-    </article>
+        const posArray = new Float32Array(particlesCount * 3);
+        const colorsArray = new Float32Array(particlesCount * 3);
+        const sizesArray = new Float32Array(particlesCount);
 
-    <article class="project">
-      <h3>Social App</h3>
-      <p>Social media platform with real-time chat and user management.</p>
-      <div class="tags">
-        <span class="tag">Node.js</span>
-        <span class="tag">Express</span>
-        <span class="tag">MongoDB</span>
-        <span class="tag">Socket.io</span>
-      </div>
-      <a class="cta" href="https://github.com/HONDA-74/Social-App" target="_blank">GitHub</a>
-    </article>
+        for (let i = 0; i < particlesCount * 3; i += 3) {
+          // Position with better distribution
+          posArray[i] = (Math.random() - 0.5) * 20;
+          posArray[i + 1] = (Math.random() - 0.5) * 20;
+          posArray[i + 2] = (Math.random() - 0.5) * 20;
 
-  </section>
+          // Colors - grayscale from dark to light
+          const grayValue = Math.random() * 0.4 + 0.1;
+          colorsArray[i] = grayValue;
+          colorsArray[i + 1] = grayValue;
+          colorsArray[i + 2] = grayValue;
 
-  <section class="about">
-    <h2>About Me</h2>
-    <p>I’m a Backend Developer with practical experience building scalable APIs using Node.js, Express and MongoDB. I’m currently expanding my skills at ITI where I’m learning NestJS, React, Next.js and UI/UX design to become a full-stack developer. I enjoy solving problems, writing clean code and building features that deliver value to users.</p>
-  </section>
+          // Sizes
+          sizesArray[i / 3] = Math.random() * 0.03 + 0.01;
+        }
 
-  <div class="quick-links">
-    <a href="https://www.linkedin.com/in/mohanad-tarek-2714b92b6" target="_blank">LinkedIn</a>
-    <a href="mailto:mohanadtarek742203@gmail.com" target="_blank">Email</a>
-    <a href="https://www.facebook.com/mohanad74tarek/?viewas=100000686899395&locale=ar_AR" target="_blank">Facebook</a>
-    <a href="https://www.instagram.com/jr.honda.74/" target="_blank">Instagram</a>
-  </div>
+        particlesGeometry.setAttribute(
+          "position",
+          new THREE.BufferAttribute(posArray, 3)
+        );
+        particlesGeometry.setAttribute(
+          "color",
+          new THREE.BufferAttribute(colorsArray, 3)
+        );
+        particlesGeometry.setAttribute(
+          "size",
+          new THREE.BufferAttribute(sizesArray, 1)
+        );
 
-  <footer>
-    Built by <strong>Mohanad Tarek</strong> — Backend Developer.
-  </footer>
-</div>
+        // Material with size attenuation
+        const particlesMaterial = new THREE.PointsMaterial({
+          size: 0.02,
+          vertexColors: true,
+          transparent: true,
+          opacity: 0.8,
+          sizeAttenuation: true,
+        });
 
-<!-- Animated Background JS -->
-<script>
-$(document).ready(function(){
-  var width = $(window).width();
-  var height = $(window).height();
-  $('#background-container, #background-1, #background-2').css({'min-width': width,'min-height': height});
-  svgNew();
-  recreateSvg();
-});
+        // Points mesh
+        const particlesMesh = new THREE.Points(
+          particlesGeometry,
+          particlesMaterial
+        );
+        scene.add(particlesMesh);
 
-var svg = {};
-var draw = 1;
+        camera.position.z = 15;
 
-var svgNew = function(){
-  svg.t = new Trianglify({
-    cellSize:100,
-    variance:0.75,
-    xColors: ['#0f0f0f','#1a1a1a','#2a2a2a'],
-    yColors: ['#0f0f0f','#1a1a1a','#2a2a2a']
-  });
-  svg.width = $(window).width();
-  svg.height = $(window).height();
-  svg.pattern = svg.t.generate(svg.width, svg.height);
-  if(draw===1){svgDraw1();}else{svgDraw2();}
-};
+        // Mouse movement effect
+        let mouseX = 0;
+        let mouseY = 0;
+        let targetX = 0;
+        let targetY = 0;
 
-var svgDraw1 = function(resize){
-  draw=2;
-  if(resize==='resize'){
-    svg.pattern=svg.t.generate(svg.width,svg.height);
-    $('#background-1').css({'min-width':svg.width,'min-height':svg.height,'background':svg.pattern.dataUrl});
-  }else{
-    $('.background-1').css({'background':svg.pattern.dataUrl});
-    fade1();
-  }
-};
-var svgDraw2 = function(resize){
-  draw=1;
-  if(resize==='resize'){
-    svg.pattern=svg.t.generate(svg.width,svg.height);
-    $('#background-2').css({'min-width':svg.width,'min-height':svg.height,'background':svg.pattern.dataUrl});
-  }else{
-    $('.background-2').css({'background':svg.pattern.dataUrl});
-    fade2();
-  }
-};
+        document.addEventListener("mousemove", (event) => {
+          targetX = (event.clientX / window.innerWidth) * 2 - 1;
+          targetY = -(event.clientY / window.innerHeight) * 2 + 1;
+        });
 
-var fade1 = function(){
-  $('.background-1').velocity("fadeIn",{duration:3000});
-  $('.background-2').velocity("fadeOut",{duration:4000});
-};
-var fade2 = function(){
-  $('.background-2').velocity("fadeIn",{duration:3000});
-  $('.background-1').velocity("fadeOut",{duration:4000});
-};
+        // Animation with smooth mouse follow
+        const clock = new THREE.Clock();
 
-var recreateSvg = function(){
-  window.setInterval(svgNew,5000);
-};
+        function animate() {
+          requestAnimationFrame(animate);
 
-$(window).resize(function(){
-  svg.width=$(window).width();
-  svg.height=$(window).height();
-  $('#background-container').css({'min-width':svg.width,'min-height':svg.height});
-  svgDraw1('resize');
-  svgDraw2('resize');
-});
-</script>
-</body>
+          const elapsedTime = clock.getElapsedTime();
+
+          // Smooth mouse movement
+          mouseX += (targetX - mouseX) * 0.05;
+          mouseY += (targetY - mouseY) * 0.05;
+
+          // Subtle rotation based on time and mouse
+          particlesMesh.rotation.x = elapsedTime * 0.05 + mouseY * 0.3;
+          particlesMesh.rotation.y = elapsedTime * 0.05 + mouseX * 0.3;
+
+          // Gentle floating animation
+          particlesMesh.position.y = Math.sin(elapsedTime * 0.5) * 0.5;
+
+          renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Handle window resize
+        window.addEventListener("resize", () => {
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Fade in animation for elements
+        const fadeElements = document.querySelectorAll(".fade-in");
+
+        const fadeInObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                setTimeout(() => {
+                  entry.target.classList.add("visible");
+                }, 100);
+              }
+            });
+          },
+          {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px",
+          }
+        );
+
+        fadeElements.forEach((el) => {
+          fadeInObserver.observe(el);
+        });
+
+        // Initial animation for profile section
+        gsap.from(".profile-section", {
+          duration: 1.2,
+          x: -80,
+          opacity: 0,
+          ease: "power3.out",
+          delay: 0.3,
+        });
+
+        gsap.from(".content-section", {
+          duration: 1.2,
+          x: 80,
+          opacity: 0,
+          ease: "power3.out",
+          delay: 0.5,
+        });
+      });
+    </script>
+  </body>
 </html>
