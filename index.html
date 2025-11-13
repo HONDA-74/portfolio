@@ -1,242 +1,199 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mohanad Tarek — Web Developer</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg:#0f0f0f;
-      --card:#1a1a1a;
-      --muted:#94a3b8;
-      --accent:#06b6d4;
-      --glass:rgba(255,255,255,0.04);
-    }
-    *{box-sizing:border-box;}
-    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;color:#e6eef8;
-      background: linear-gradient(-45deg, #0f0f0f, #1a1a1a, #0f0f0f, #1a1a1a);
-      background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mohanad Tarek — Web Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --accent:#06b6d4;
+  --muted:#94a3b8;
+  --card-bg:rgba(255,255,255,0.02);
+}
 
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+/* Body + Animated Multi-layered SVG Background */
+body {
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
+  color:#e6eef8;
+  overflow-x:hidden;
+  background:#0f0f0f;
+  position:relative;
+}
 
-    .container{max-width:1100px;margin:36px auto;padding:24px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:16px}
-    .brand{display:flex;align-items:center;gap:12px}
-    
-    .avatar {
-      width:64px;
-      height:64px;
-      border-radius:50%;
-      overflow:hidden;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      animation: avatarZoom 1s ease forwards;
-      opacity:0;
-    }
-    .avatar-img {
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      transform: scale(1);
-      transition: transform 0.5s ease;
-    }
-    .avatar-img:hover { transform: scale(1.05); }
-    @keyframes avatarZoom {
-      from { opacity:0; transform: scale(0.8); }
-      to { opacity:1; transform: scale(1); }
-    }
+/* SVG Layers as pseudo-elements */
+body::before, body::after {
+  content:'';
+  position:fixed;
+  top:0; left:0; width:100%; height:100%; z-index:-1;
+  background-repeat:no-repeat;
+  background-size:cover;
+  opacity:0.05;
+}
 
-    h1{margin:0;font-size:1.4rem}
-    p.lead{color:var(--muted);margin:6px 0 0}
-    nav a{color:var(--muted);text-decoration:none;margin-left:14px}
-    .grid{display:grid;grid-template-columns:1fr 360px;gap:28px;margin-top:28px}
-    main{background:rgba(255,255,255,0.02);padding:20px;border-radius:12px}
-    aside{background:rgba(255,255,255,0.02);padding:20px;border-radius:12px;height:fit-content}
-    .section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-    
-    /* Projects hover effect */
-    .project {
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      padding: 16px;
-      border-radius: 10px;
-      margin-bottom: 12px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-      cursor: pointer;
-    }
-    .project:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-      background: linear-gradient(180deg, rgba(6,182,212,0.1), rgba(6,182,212,0.05));
-    }
+body::before {
+  background-image: radial-gradient(circle at 20% 30%, #1a1a1a 0%, transparent 60%);
+  animation: move1 30s linear infinite;
+}
+body::after {
+  background-image: radial-gradient(circle at 80% 70%, #2a2a2a 0%, transparent 60%);
+  animation: move2 45s linear infinite;
+}
 
-    .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
-    .tag{font-size:12px;padding:6px 8px;border-radius:8px;background:#071827;color:var(--muted)}
-    .tech{font-weight:600;color:var(--accent)}
-    .cta{display:inline-block;padding:10px 14px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--accent);text-decoration:none;transition:all 0.3s}
-    .cta:hover{background:var(--accent);color:#0f1724;}
-    .about p{color:var(--muted);line-height:1.6}
-    footer{margin-top:28px;color:var(--muted);text-align:center;font-size:13px}
-    .small{font-size:13px;color:var(--muted)}
+@keyframes move1 {
+  0% { transform: translate(0,0) scale(1);}
+  50% { transform: translate(30px, -20px) scale(1.05);}
+  100% { transform: translate(0,0) scale(1);}
+}
 
-    /* Responsive */
-    @media (max-width:900px){
-      .grid{grid-template-columns:1fr;gap:20px;}
-      header{flex-direction:column;align-items:flex-start;}
-      nav a{margin-left:0;margin-right:10px;margin-top:8px;display:inline-block;}
-      .brand h1{font-size:1.1rem}
-    }
-  </style>
+@keyframes move2 {
+  0% { transform: translate(0,0) scale(1);}
+  50% { transform: translate(-20px, 30px) scale(1.03);}
+  100% { transform: translate(0,0) scale(1);}
+}
+
+/* Container & layout */
+.container{max-width:1100px;margin:0 auto;padding:24px;display:flex;flex-direction:column;align-items:center;}
+header{display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:60px;}
+header h1{font-size:2.4rem;margin:16px 0 6px;}
+header p.lead{color:var(--muted);font-size:1.1rem;line-height:1.6;max-width:800px;margin:0 auto;}
+
+.avatar-container{
+  width:250px;
+  height:250px;
+  border-radius:50%;
+  overflow:hidden;
+  margin-bottom:30px;
+}
+.avatar-container img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition: transform 0.5s ease;
+}
+.avatar-container img:hover{ transform: scale(1.05); }
+
+/* Projects */
+.project-section{width:100%; max-width:1000px;}
+.section-title{margin-bottom:32px; text-align:left;}
+.project{
+  background:var(--card-bg);
+  padding:32px;
+  border-radius:16px;
+  margin-bottom:32px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.project:hover{
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+.project h3{margin-top:0;}
+.project .tags{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px;}
+.project .tag{font-size:12px;padding:6px 12px;border-radius:10px;background:#1a1a1a;color:var(--muted);}
+.project .cta{display:inline-block;padding:10px 14px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--accent);text-decoration:none;transition:all 0.3s;}
+.project .cta:hover{background:var(--accent);color:#0f0f0f;}
+
+/* About */
+.about{margin-top:60px; max-width:800px; text-align:left;}
+.about p{color:var(--muted);line-height:1.6;font-size:1.05rem;}
+
+/* Footer */
+footer{margin-top:60px;color:var(--muted);text-align:center;font-size:13px;}
+
+/* Quick Links */
+.quick-links{margin-top:32px; display:flex;flex-wrap:wrap; gap:12px;}
+.quick-links a{color:var(--accent); text-decoration:none; border:1px solid rgba(255,255,255,0.1); padding:10px 14px; border-radius:10px; transition:all 0.3s;}
+.quick-links a:hover{background:var(--accent);color:#0f0f0f;}
+
+/* Responsive */
+@media(max-width:900px){
+  .avatar-container{width:180px;height:180px;}
+  header h1{font-size:2rem;}
+  header p.lead{font-size:1rem;}
+  .project{padding:24px;}
+}
+</style>
 </head>
 <body>
   <div class="container">
     <header>
-      <div class="brand">
-        <div class="avatar">
-          <img src="https://drive.google.com/uc?export=view&id=1a6xrPsUJ2zaGLOVXVqZlUabevvxWsGMx" alt="Mohanad Tarek" class="avatar-img" />
-        </div>
-        <div>
-          <h1>Mohanad Tarek</h1>
-          <p class="lead">Backend Developer • Node.js, Express, MongoDB — Learning React, Next.js & UI/UX</p>
-        </div>
+      <div class="avatar-container">
+        <img src="https://drive.google.com/uc?export=view&id=1a6xrPsUJ2zaGLOVXVqZlUabevvxWsGMx" alt="Mohanad Tarek">
       </div>
-      <nav>
-        <a href="#projects">Projects</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-      </nav>
+      <h1>Mohanad Tarek</h1>
+      <p class="lead">Backend Developer • Node.js, Express, MongoDB — Learning React, Next.js & UI/UX</p>
     </header>
 
-    <div class="grid">
-      <main>
-        <section id="projects">
-          <div class="section-title">
-            <h2>Projects</h2>
-            <span class="small">Selected works (Backend, Real-time, AI integration)</span>
-          </div>
+    <section class="project-section">
+      <div class="section-title"><h2>Projects</h2></div>
 
-          <!-- Job Search App -->
-          <article class="project">
-            <h3>Job Search App</h3>
-            <p class="small">A full-featured job platform with REST APIs, GraphQL endpoints, and real-time notifications.</p>
-            <div class="tags">
-              <span class="tag">Node.js</span>
-              <span class="tag">Express</span>
-              <span class="tag">MongoDB</span>
-              <span class="tag">GraphQL</span>
-              <span class="tag">Socket.io</span>
-              <span class="tag">JWT</span>
-            </div>
-            <p style="margin-top:10px;color:var(--muted)">Role: Backend Developer — designed schemas, implemented REST & GraphQL APIs, integrated Socket.io for live updates.</p>
-            <div style="margin-top:10px">
-              <a class="cta" href="https://github.com/HONDA-74/Search-Job-App" target="_blank">GitHub</a>
-              <a class="cta" href="#" style="margin-left:8px">Live Demo</a>
-            </div>
-          </article>
-
-          <!-- Feed Ur Seed -->
-          <article class="project">
-            <h3>Feed Ur Seed</h3>
-            <p class="small">Plant-care platform with CRUD, an e-commerce shop, chatbot, and AI-powered image recognition.</p>
-            <div class="tags">
-              <span class="tag">Node.js</span>
-              <span class="tag">Express</span>
-              <span class="tag">MongoDB</span>
-              <span class="tag">AI / Image Recognition</span>
-              <span class="tag">Chatbot</span>
-            </div>
-            <p style="margin-top:10px;color:var(--muted)">Role: Backend Developer — implemented APIs, connected AI model, and integrated shop + chatbot modules.</p>
-            <div style="margin-top:10px">
-              <a class="cta" href="https://github.com/HONDA-74/FeedYourSeed" target="_blank">GitHub</a>
-              <a class="cta" href="#" style="margin-left:8px">Live Demo</a>
-            </div>
-          </article>
-
-          <!-- Book Library -->
-          <article class="project">
-            <h3>Book Library</h3>
-            <p class="small">Library platform with CRUD operations, search, and management functionalities.</p>
-            <div class="tags">
-              <span class="tag">Node.js</span>
-              <span class="tag">Express</span>
-              <span class="tag">MongoDB</span>
-            </div>
-            <p style="margin-top:10px;color:var(--muted)">Role: Backend Developer — implemented APIs and managed book database.</p>
-            <div style="margin-top:10px">
-              <a class="cta" href="https://github.com/HONDA-74/Search-Job-App" target="_blank">GitHub</a>
-              <a class="cta" href="#" style="margin-left:8px">Live Demo</a>
-            </div>
-          </article>
-
-          <!-- Social App -->
-          <article class="project">
-            <h3>Social App</h3>
-            <p class="small">Social media platform with real-time chat and user management.</p>
-            <div class="tags">
-              <span class="tag">Node.js</span>
-              <span class="tag">Express</span>
-              <span class="tag">MongoDB</span>
-              <span class="tag">Socket.io</span>
-            </div>
-            <p style="margin-top:10px;color:var(--muted)">Role: Backend Developer — built chat and API features.</p>
-            <div style="margin-top:10px">
-              <a class="cta" href="https://github.com/HONDA-74/Social-App" target="_blank">GitHub</a>
-              <a class="cta" href="#" style="margin-left:8px">Live Demo</a>
-            </div>
-          </article>
-
-        </section>
-
-        <section id="about" style="margin-top:22px">
-          <div class="section-title"><h2>About</h2></div>
-          <div class="about">
-            <p>I’m a Backend Developer with practical experience building scalable APIs using Node.js, Express and MongoDB. I’m currently expanding my skills at ITI where I’m learning NestJS, React, Next.js and UI/UX design to become a full-stack developer. I enjoy solving problems, writing clean code and building features that deliver value to users.</p>
-          </div>
-        </section>
-
-      </main>
-
-      <aside>
-        <div style="margin-bottom:14px">
-          <h4>Skills</h4>
-          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">
-            <span class="tag">Node.js</span>
-            <span class="tag">Express</span>
-            <span class="tag">MongoDB</span>
-            <span class="tag">GraphQL</span>
-            <span class="tag">Socket.io</span>
-            <span class="tag">REST APIs</span>
-            <span class="tag">Mongoose</span>
-            <span class="tag">JWT</span>
-          </div>
+      <!-- Job Search App -->
+      <article class="project">
+        <h3>Job Search App</h3>
+        <p>A full-featured job platform with REST APIs, GraphQL endpoints, and real-time notifications.</p>
+        <div class="tags">
+          <span class="tag">Node.js</span>
+          <span class="tag">Express</span>
+          <span class="tag">MongoDB</span>
+          <span class="tag">GraphQL</span>
+          <span class="tag">Socket.io</span>
+          <span class="tag">JWT</span>
         </div>
+        <a class="cta" href="https://github.com/HONDA-74/Search-Job-App" target="_blank">GitHub</a>
+      </article>
 
-        <div style="margin-bottom:14px">
-          <h4>Certifications</h4>
-          <p class="small" style="margin:6px 0 0">Backend Development Certificate — Route</p>
-          <p class="small" style="margin:6px 0 0">ITI Scholarship — Ongoing</p>
+      <!-- Feed Ur Seed -->
+      <article class="project">
+        <h3>Feed Ur Seed</h3>
+        <p>Plant-care platform with CRUD, an e-commerce shop, chatbot, and AI-powered image recognition.</p>
+        <div class="tags">
+          <span class="tag">Node.js</span>
+          <span class="tag">Express</span>
+          <span class="tag">MongoDB</span>
+          <span class="tag">AI / Image Recognition</span>
+          <span class="tag">Chatbot</span>
         </div>
+        <a class="cta" href="https://github.com/HONDA-74/FeedYourSeed" target="_blank">GitHub</a>
+      </article>
 
-        <div style="margin-bottom:14px">
-          <h4>Quick Links</h4>
-          <p style="margin:8px 0"><a class="cta" href="https://www.linkedin.com/in/mohanad-tarek-2714b92b6" target="_blank">LinkedIn</a></p>
-          <p style="margin:8px 0"><a class="cta" href="mailto:mohanadtarek742203@gmail.com" target="_blank">Email</a></p>
-          <p style="margin:8px 0"><a class="cta" href="https://www.facebook.com/mohanad74tarek/?viewas=100000686899395&locale=ar_AR" target="_blank">Facebook</a></p>
-          <p style="margin:8px 0"><a class="cta" href="https://www.instagram.com/jr.honda.74/" target="_blank">Instagram</a></p>
+      <!-- Book Library -->
+      <article class="project">
+        <h3>Book Library</h3>
+        <p>Library platform with CRUD operations, search, and management functionalities.</p>
+        <div class="tags">
+          <span class="tag">Node.js</span>
+          <span class="tag">Express</span>
+          <span class="tag">MongoDB</span>
         </div>
+        <a class="cta" href="https://github.com/HONDA-74/Search-Job-App" target="_blank">GitHub</a>
+      </article>
 
-        <div id="contact">
-          <h4>Contact</h4>
-          <p class="small" style="margin-top:6px">Email: <strong>mohanadtarek742203@gmail.com</strong></p>
+      <!-- Social App -->
+      <article class="project">
+        <h3>Social App</h3>
+        <p>Social media platform with real-time chat and user management.</p>
+        <div class="tags">
+          <span class="tag">Node.js</span>
+          <span class="tag">Express</span>
+          <span class="tag">MongoDB</span>
+          <span class="tag">Socket.io</span>
         </div>
-      </aside>
+        <a class="cta" href="https://github.com/HONDA-74/Social-App" target="_blank">GitHub</a>
+      </article>
+
+    </section>
+
+    <section class="about">
+      <h2>About Me</h2>
+      <p>I’m a Backend Developer with practical experience building scalable APIs using Node.js, Express and MongoDB. I’m currently expanding my skills at ITI where I’m learning NestJS, React, Next.js and UI/UX design to become a full-stack developer. I enjoy solving problems, writing clean code and building features that deliver value to users.</p>
+    </section>
+
+    <div class="quick-links">
+      <a href="https://www.linkedin.com/in/mohanad-tarek-2714b92b6" target="_blank">LinkedIn</a>
+      <a href="mailto:mohanadtarek742203@gmail.com" target="_blank">Email</a>
+      <a href="https://www.facebook.com/mohanad74tarek/?viewas=100000686899395&locale=ar_AR" target="_blank">Facebook</a>
+      <a href="https://www.instagram.com/jr.honda.74/" target="_blank">Instagram</a>
     </div>
 
     <footer>
